@@ -1,0 +1,31 @@
+type Contract @entity {
+  id: ID!
+  tokens: [Token!]! @derivedFrom(field: "contract")
+
+  maxEverIndividualTokenSupply: BigInt!
+  totalSupply: BigInt!
+  maxEverTotalSupply: BigInt!
+  maxEverTransferValue: BigInt!
+
+  minTransferTimestamp: BigInt!
+  maxTransferTimestamp: BigInt!
+
+  """Accounts that were ever involved in at least one nonzero-value transfer on this contract."""
+  uniqueTokenOwners: [UniqueTokenOwner!]! @derivedFrom(field: "contract")
+  uniqueTokenOwnerCount: BigInt!
+
+  totalCorrection: BigInt!
+}
+
+type Token @entity {
+  id: ID!
+  contract: Contract!
+  tokenId: BigInt!
+  supply: BigInt!
+  maxEverSupply: BigInt!
+}
+
+type UniqueTokenOwner @entity {
+  id: ID!
+  contract: Contract!
+}

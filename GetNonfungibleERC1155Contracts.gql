@@ -1,0 +1,21 @@
+query GetNonfungibleERC1155Contracts($blockNumber: Int!, $first: Int = 100, $skip: Int = 0) {
+  contracts(
+    block: {
+      number: $blockNumber
+    }
+    first: $first,
+    skip: $skip,
+  	where: {
+      maxEverIndividualTokenSupply: 1,
+      maxEverTransferValue: 1,
+      uniqueTokenOwnerCount_gt: 1,
+  	},
+    orderBy: totalSupply,
+    orderDirection: desc,
+  ) {
+    id
+    totalSupply
+    maxEverTotalSupply
+    uniqueTokenOwnerCount
+  }
+}

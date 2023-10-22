@@ -1,0 +1,34 @@
+specVersion: 0.0.5
+description: Global ERC-1155 statistics
+schema:
+  file: ./schema.graphql
+# features:
+#   - nonFatalErrors
+dataSources:
+  - kind: ethereum/contract
+    name: ERC1155
+    network: mainnet
+    source:
+      # The address is optional; omitting it allows to index matching events from all contracts.
+      abi: ERC1155
+      # startBlock: 15000000 # Jun-21-2022 02:28:20 AM +UTC
+      startBlock: 16000000 # Nov-18-2022 10:51:47 PM +UTC
+      # startBlock: 17000000 # Apr-07-2023 11:58:11 PM +UTC
+      # startBlock: 18000000 # Aug-26-2023 04:21:35 PM +UTC
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Contract
+        - Token
+        - UniqueTokenOwner
+      abis:
+        - name: ERC1155
+          file: ./ERC1155.abi.json
+      eventHandlers:
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleTransferSingle
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handleTransferBatch
+      file: ./assemblyscript/mapping.ts

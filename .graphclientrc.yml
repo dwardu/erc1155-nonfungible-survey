@@ -1,0 +1,7 @@
+sources:
+  - name: ERC1155NonfungibleSurvey
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/dwardu/erc1155
+documents:
+  - ./GetNonfungibleERC1155Contracts.gql
